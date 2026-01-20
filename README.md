@@ -47,14 +47,9 @@ O projeto segue uma **arquitetura em camadas**, dividida da seguinte forma:
   - Implementação do cache Redis
   - Consumo da PokeAPI
 
-## 🛠️ Tecnologias Utilizadas
+## 🛠️ Bibliotecas Utilizadas
 
-- **.NET 8**
-- **ASP.NET Core Web API**
 - **Redis**
 - **StackExchange.Redis**
 - **Refit** (consumo da API externa)
-- **PokeAPI**
-
-## 📂 Organização do Projeto (Exemplo)
 
