@@ -1,66 +1,55 @@
-# Back.Redis
+# Redis Cache Consolidation
 
-Esta é uma API desenvolvida em .NET 8 que consome dados da API externa [PokeAPI](https://pokeapi.co/) e armazena as entidades consultadas em cache utilizando Redis, com um tempo de expiração de 1 dia.
+Projeto de consolidação da **camada de cache utilizando Redis**, desenvolvido em **.NET 8**, com foco em arquitetura, organização e boas práticas no uso de **cache distribuído**.
 
-## Tecnologias Utilizadas
+A aplicação consome dados de uma API externa (**PokeAPI**) e utiliza o Redis como camada intermediária para otimizar performance, reduzir chamadas externas e controlar expiração de dados.
 
-- .NET 8
-- Redis
-- Refit (para consumo da API externa)
-- StackExchange.Redis (para manipulação do cache Redis)
+## 📌 Objetivo do Projeto
 
-## Instalação e Configuração
+Este projeto tem como objetivo consolidar os conceitos de **cache distribuído com Redis**, demonstrando:
 
-1. Clone o repositório:
-   ```sh
-   git clone https://github.com/seu-usuario/seu-repositorio.git
-   cd seu-repositorio
-   ```
+- Uso do Redis como camada de cache
+- Estratégias de cache-first
+- Controle de expiração (TTL)
+- Isolamento da camada de cache da lógica de negócio
+- Integração com APIs externas
 
-2. Configure o Redis localmente ou utilize um serviço de hospedagem para Redis.
+O foco principal é **arquitetura e uso correto do cache**, não a complexidade do domínio.
 
-3. Defina a string de conexão do Redis no `appsettings.json`:
-   ```json
-   {
-     "ConnectionString": {
-       "Redis": "localhost:6379"
-     }
-   }
-   ```
+## 🧠 Conceitos Aplicados
 
-4. Restaure os pacotes e execute a API:
-   ```sh
-   dotnet restore
-   dotnet run
-   ```
+- Cache distribuído com Redis
+- Redução de chamadas a APIs externas
+- Expiração e invalidação de cache
+- Separação de responsabilidades
 
-## Endpoints
+## 🏗️ Arquitetura
 
-### Buscar um Pokémon por Nome ou ID
+O projeto segue uma **arquitetura em camadas**, dividida da seguinte forma:
 
-- **GET** `/pokemon/{idOuNome}`
-- **Descrição:** Busca um Pokémon na PokeAPI e o armazena no Redis por 1 dia.
-- **Resposta Exemplo:**
-  ```json
-  {
-    "id": 25,
-    "name": "pikachu",
-    "height": 4,
-    "weight": 60
-  }
-  ```
+### 🔹 API
+- Exposição dos endpoints HTTP
+- Responsável apenas por:
+  - Receber requisições
+  - Delegar chamadas à camada de negócio
+  - Retornar respostas
 
-## Funcionamento do Cache
+### 🔹 Business
+- Contém as **regras de negócio**
+- Orquestra:
+  - Verificação de cache
+  - Decisão entre buscar no Redis ou na API externa
+- Não conhece detalhes de infraestrutura
 
-- Quando um Pokémon é consultado, a API verifica se ele já está armazenado no Redis.
-- Se estiver em cache, retorna os dados imediatamente.
-- Se não estiver, faz a consulta na PokeAPI, armazena os dados no Redis com expiração de **1 dia** e retorna a resposta.
+### 🔹 Data
+- Responsável por acesso a dados e integrações
+- Inclui:
+  - Implementação do cache Redis
+  - Consumo da PokeAPI
 
-## Contribuição
+## 🛠️ Bibliotecas Utilizadas
 
-Contribuições são bem-vindas! Sinta-se à vontade para abrir um **Pull Request** ou relatar problemas via **Issues**.
-
-## Licença
-
-Este projeto é licenciado sob a [MIT License](LICENSE).
+- **Redis**
+- **StackExchange.Redis**
+- **Refit** (consumo da API externa)
 
